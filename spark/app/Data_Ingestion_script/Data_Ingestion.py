@@ -4,16 +4,17 @@ class data_ingester:
     
     def __generate_colors_string(self,colors):
         color_string = ""
+        colors_fixed = []
         
         if colors !="":
             colors_fixed = colors.split(",")
         
-            for i in range(0,len(colors_fixed)):
+        for i in range(0,len(colors_fixed)):
         
-                color_string = color_string + colors_fixed[i]
+            color_string = color_string + colors_fixed[i]
         
-                if i !=len(colors_fixed)-1:
-                    color_string = color_string + "%2C"
+            if i !=len(colors_fixed)-1:
+                color_string = color_string + "%2C"
         
         return color_string
     
@@ -56,7 +57,7 @@ class data_ingester:
         except:
             raise Exception("Connection problem or Connection string problem")
     
-    def __get_data_from_API(self,year,manufacturer,colors,stoleness):
+    def __get_data_from_API(self,page,year,manufacturer,colors,stoleness):
         color_string = self.__generate_colors_string(colors)
         
         manufacturer_string = self.__generate_manufacturer_string(manufacturer)
@@ -65,7 +66,7 @@ class data_ingester:
 
         stoleness_string = self.__generate_stolness_string(stoleness)
         
-        url = "https://bikeindex.org/api/v3/search?page=1&per_page=25&location=IP&"+color_string+"&"+manufacturer_string+"&"+year_string+"&"+stoleness_string
+        url = "https://bikeindex.org/api/v3/search?page={}&per_page=25&location=IP&{}&{}&{}&{}".format(str(page),color_string,manufacturer_string,year_string,stoleness_string)
 
         data = self.__data_engine(url)
         
@@ -75,10 +76,9 @@ class data_ingester:
 
         return data
 
-    def generate_data(self,year,manufacturer,colors,stoleness):
+    def generate_data(self,page,year,manufacturer,colors,stoleness):
     
-        data = self.__get_data_from_API(year,manufacturer,colors,stoleness)
+        data = self.__get_data_from_API(page,year,manufacturer,colors,stoleness)
 
         data = self.__parse_data(data)
-
         return data
