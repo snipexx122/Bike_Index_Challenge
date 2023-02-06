@@ -12,6 +12,7 @@ postgres_pwd = sys.argv[3]
 table =sys.argv[4]
 
 
+
 def write_new_data(df_new,spark):
 
     df_saved = spark.read.format("jdbc").option("url", postgres_db).option("dbtable", table).option("user", postgres_user).option("password", postgres_pwd).load()
@@ -35,6 +36,8 @@ def write_new_data(df_new,spark):
 
     spark.sql("select count(*) from new_data").show()
     
+
+
 def display_data(spark):
 
     df = spark.read.format("jdbc").option("url", postgres_db).option("dbtable", table).option("user", postgres_user).option("password", postgres_pwd).load()
