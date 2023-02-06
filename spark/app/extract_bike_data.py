@@ -37,7 +37,7 @@ def extract(engine,year,manufacturer,colors,stoleness):
 
 def start_extraction():
     engine = data_ingester()
-    bike_data = extract(engine,2023,"","","")
+    bike_data = extract(engine,2020,"","","")
         
     return bike_data 
 
