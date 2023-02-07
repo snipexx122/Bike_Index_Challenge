@@ -128,6 +128,31 @@ select * from bike_Data;
 
 The code runs daily to get data say of 2023 then it makes sure that no duplicate data that already exists in the database is entered. data that will be written are the ones that are new or were upated.
 
+## Question 2
+
+One approach to set up this architecture is to use a data lake and data pipelines. 
+
+1. Store the raw data in a data lake, such as Amazon S3, where it can be easily stored and accessed by different teams.
+
+2. Create a data pipeline using Apache Airflow (for example) to (ETL) the raw data into a more usable format for other teams. This would involve cleaning and transforming the data into a structured format, such as a Parquet or Avro file, and loading it into the data lake.
+
+3. Store the transformed data in a separate location in the data lake, such as a Parquet or Avro file that handles big data properly.
+
+4. Set up appropriate permissions and access controls(IAM for example) to the data lake so that other teams can access the transformed data, but cannot modify or delete the raw data or data pipeline.
+
+
+## Question 3
+
+
+One approach I thought about was as follows:
+
+1. Store the latest version of the incident data in a main table in a data store such as a relational database.
+
+2. Then create another table that stores the historical version of the incidents. This table will have an additional column to store the timestamp of when the data was updated.
+
+3. During the daily data ingestion process,we can compare the latest version of the incidents with the stored version in the main table. If there are any changes, update the main table with the latest version, and then insert a new record into the historical table with the updated data and the current timestamp.
+
+The only problem I see in this approach in in the initial loading part where it would be close to impossible to implement such a method because data and "updated incidents" are not exactly dated.
 
 
 
