@@ -4,7 +4,7 @@ The project purpose is to ingest data daily from bike index api.
 
 
 ## Tech Stack
-**Databse:** Postgress
+**Database:** Postgress
 
 **Containerization:** Docker
 
